@@ -1,0 +1,29 @@
+import requests
+
+api_key = '94c27e45cecc609965a03735d4965d12'
+suma= 0
+while True:
+    city = input("q- if exit; city -> ")
+    if city=="q":
+        break
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+    weather=[]
+    
+    response = requests.get(url)
+    data = response.json()
+
+    # 200 - це значить, що все гаразд
+    if response.status_code == 200:
+        temperature = data['main']['temp']
+
+        print(f"Температура в місті {city}: {temperature}°C")
+        
+        weather.append(temperature)
+        print(weather)
+        for i in weather:
+            suma+=i
+            
+    else:
+        print("error")
+if city == 'q':
+    print(f"Сума температура: {suma}")
